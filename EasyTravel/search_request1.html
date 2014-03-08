@@ -17,8 +17,8 @@
 
     <style>
   #mapCanvas {
-    width: 500px;
-    height: 400px;
+    width: 300px;
+    height: 200px;
     float: left;
   }
 
@@ -40,12 +40,11 @@
 
 <script type="text/javascript">
 
-var happy=5;
-var sad=10;
 
+var json;
  google.load("visualization", "1", {packages:["corechart"]});
     //  google.setOnLoadCallback(drawChart);
-      function drawChart() {
+      function drawChart(happy,sad) {
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
           ['Happy',     happy],
@@ -82,7 +81,7 @@ jQuery(document).ready(function($) {
 
     // Run when Search button is clicked
     $('.lead').click(function(){
-      drawChart();
+     
       // This can take a few seconds so display progress text
      // $('.lead').html('Searching Twitter...');
       
@@ -103,9 +102,13 @@ jQuery(document).ready(function($) {
       $.ajax({
         url: 'http://localhost/search_response.php?q=' + search_value + '&lat=' + $("#info1").text() + '&long=' + $("#info2").text(),
         success: function(data){
-          
+          alert(data);
+           json = eval ("(" + data + ")"); 
+           alert(json.Happy);
+          //$('#search_results').html(json);
           // Display the results
-          $('#search_results').html(data);
+          //$('#search_results').html(data);
+           drawChart(json.Happy,json.Sad);
         }
       })
     })
