@@ -54,7 +54,7 @@ var json;
 
         var options = {
           backgroundColor: 'transparent',
-          title: 'Happiness Index',
+          
           pieHole: 0.4
         };
 
@@ -76,11 +76,13 @@ jQuery(document).ready(function($) {
 document.getElementById("donutchart").style.display = "none";
 document.getElementById("mapCanvas").style.display = "inline-block";
 document.getElementById("weather_report").style.display = "none";
- 
+ document.getElementById("search").style.display = "inline-block";
+ document.getElementById("findfriends").style.display = "none";
+  document.getElementById("news").style.display = "none";
 
 
     // Run when Search button is clicked
-    $('.lead').click(function(){
+    $('#search').click(function(){
      
       // This can take a few seconds so display progress text
      // $('.lead').html('Searching Twitter...');
@@ -107,11 +109,26 @@ document.getElementById("weather_report").style.display = "none";
            document.getElementById("donutchart").style.display= "inline-block";
            document.getElementById("mapCanvas").style.display = "none";
            document.getElementById("weather_report").style.display = "inline-block";
+           document.getElementById("search").style.display = "none";
+           document.getElementById("findfriends").style.display = "inline-block";
+           document.getElementById("news").style.display = "inline-block";
            alert(json.Happy);
           //$('#search_results').html(json);
           // Display the results
           //$('#search_results').html(data);
-          $(weather_report).html("Current Conditions:<br>Temperature:"+json.Weather);
+          alert("<h3>Current Conditions:</h3><h4>Temperature:"+json.Weather+"</h4> ");
+
+          $(weather_report).html("<h4>Current Conditions:</h4><h4>Temperature:"+json.Weather+"&deg;F</h4><h4>Happiness index:</h4>" );
+
+          var str="<ul>"
+          for (var i in json.news) {
+              var news_l = json.news[i];
+              //console.log(news_l.headline);
+              str=str+"<li>"+news_l.headline;
+              }
+          str=str+"</ul>"
+          $(news).html(str)
+
            drawChart(json.Happy,json.Sad);
 
         }
@@ -245,12 +262,25 @@ google.maps.event.addDomListener(window, 'load', initialize);
            
             <p class="lead">
               <div id="mapCanvas"></div>
-              <div id="weather_report"  style="width: 400px; height: 200px; padding=50px;"></div>
+              <div id="weather_report" ></div>
                <div id="donutchart" style="width: 400px; height: 200px;" align="right"> </div>
 
             </p>
             <p class="lead">
+              <div id="search">
+
               <a href="#" class="btn btn-lg btn-default">Analyse</a>
+              </div>
+              <div id="news">
+              </div>
+                 <div id="findfriends">
+
+              <a href="#" class="btn btn-lg btn-default">Find Friends</a>
+              </div>
+
+
+
+
               <div id="markerStatus">
                
 
