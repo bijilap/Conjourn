@@ -1,0 +1,7 @@
+create database easytravel;
+
+use easytravel;
+
+create table login_twilio (gmailId varchar(40), twilioPhoneNo varchar(15));
+
+create table contact_details (gmailId varchar(50), fname varchar(15), mname varchar(15), lname varchar(15), location varchar(20), phone varchar(15));
