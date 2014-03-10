@@ -25,6 +25,93 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+  <script type="text/javascript">
+  /**
+   * Global variables to hold the profile and email data.
+   */
+   var profile, email;
+
+  /*
+   * Triggered when the user accepts the sign in, cancels, or closes the
+   * authorization dialog.
+   */
+  function loginFinishedCallback(authResult) {
+    if (authResult) {
+      if (authResult['error'] == undefined){
+        toggleElement('signin-button'); // Hide the sign-in button after successfully signing in the user.
+        gapi.client.load('plus','v1', loadProfile);  // Trigger request to get the email address.
+      } else {
+        console.log('An error occurred');
+      }
+    } else {
+      console.log('Empty authResult');  // Something went wrong
+    }
+  }
+
+  /**
+   * Uses the JavaScript API to request the user's profile, which includes
+   * their basic information. When the plus.profile.emails.read scope is
+   * requested, the response will also include the user's primary email address
+   * and any other email addresses that the user made public.
+   */
+  function loadProfile(){
+    var request = gapi.client.plus.people.get( {'userId' : 'me'} );
+    request.execute(loadProfileCallback);
+  }
+
+  /**
+   * Callback for the asynchronous request to the people.get method. The profile
+   * and email are set to global variables. Triggers the user's basic profile
+   * to display when called.
+   */
+  function loadProfileCallback(obj) {
+    profile = obj;
+
+    // Filter the emails object to find the user's primary account, which might
+    // not always be the first in the array. The filter() method supports IE9+.
+    email = obj['emails'].filter(function(v) {
+        return v.type === 'account'; // Filter out the primary email
+    })[0].value; // get the email from the filtered results, should always be defined.
+    displayProfile(profile);
+  }
+
+  /**
+   * Display the user's basic profile information from the profile object.
+   */
+
+	
+function getCookie(cname)
+{
+var name = cname + "=";
+var ca = document.cookie.split(';');
+for(var i=0; i<ca.length; i++) 
+  {
+  var c = ca[i].trim();
+  if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+  }
+return "";
+}
+
+  function displayProfile(profile){
+    document.getElementById('name').innerHTML = profile['displayName'];
+    document.getElementById('pic').innerHTML = '<img src="' + profile['image']['url'] + '" />';
+    document.getElementById('email').innerHTML = email;
+    document.cookie="email="+email;
+    toggleElement('profile');
+  }
+
+  /**
+   * Utility function to show or hide elements by their IDs.
+   */
+  function toggleElement(id) {
+    var el = document.getElementById(id);
+    if (el.getAttribute('class') == 'hide') {
+      el.setAttribute('class', 'show');
+    } else {
+      el.setAttribute('class', 'hide');
+    }
+  }
+  </script>
   </head>
 
   <body>
@@ -40,18 +127,40 @@
               <h3 class="masthead-brand">Con-Journ</h3>
               <ul class="nav masthead-nav">
                 <li class="active"><a href="#">Home</a></li>
-                <li><a href="search_request1.html">Analyse the Location</a></li>
+                <li><a href="search_request1.html">Locale</a></li>
                 <li><a href="#">Contact</a></li>
               </ul>
             </div>
           </div>
 
           <div class="inner cover">
-            <h1 class="cover-heading">Cover your page.</h1>
-            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-            <p class="lead">
-              <a href="#" class="btn btn-lg btn-default">Learn more</a>
-            </p>
+            <h1 class="cover-heading">Con-Journ</h1>
+            <p class="lead">Planning to travel? How about catching up with some friends who live nearby? What's the mood around the area? Any idea about the local news?</p>
+	     <p class="lead">Well time to Con-Journ!</p>
+  <div id="signin-button" class="show">
+     <div class="g-signin"
+      data-callback="loginFinishedCallback"
+      data-approvalprompt="force"
+      data-clientid="838630028924-dmqcsmk6kd1dmgt79o8mpqgpahb9mcdp.apps.googleusercontent.com"
+      data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read"
+      data-height="long"
+      data-cookiepolicy="single_host_origin"
+      >
+    </div>
+    <br>
+    <a href="signup.html">or Sign-up</a>
+    <!-- In most cases, you don't want to use approvalprompt=force. Specified
+    here to facilitate the demo.-->
+  </div>
+
+  <div id="profile" class="hide">
+    <div>
+      <span id="pic"></span>
+      <span id="name"></span>
+    </div>
+
+    <div id="email"></div>
+  </div>
           </div>
 
           <div class="mastfoot">
@@ -69,6 +178,13 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript">
+      (function() {
+       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+       po.src = 'https://apis.google.com/js/client:plusone.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+     })();
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="bootstrap-3.1.1/dist/js/bootstrap.min.js"></script>
     <script src="bootstrap-3.1.1/assets/js/docs.min.js"></script>

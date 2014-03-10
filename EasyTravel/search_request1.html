@@ -65,6 +65,27 @@ var json;
 
 
 
+var latitude,longitude;
+function getCookie(cname)
+{
+var name = cname + "=";
+var ca = document.cookie.split(';');
+for(var i=0; i<ca.length; i++) 
+  {
+  var c = ca[i].trim();
+  if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+  }
+return "";
+}
+
+
+    function fetchContacts()
+	{
+		var querystr="NearbyContacts.php?email='"+getCookie('email')+"'&"+'latitude='+latitude+'&'+'longitude='+longitude;
+		//alert(querystr);
+		window.location=querystr;
+		return false;
+	}
 
 
 
@@ -80,6 +101,7 @@ document.getElementById("weather_report").style.display = "none";
  document.getElementById("findfriends").style.display = "none";
   document.getElementById("news").style.display = "none";
 
+    
 
     // Run when Search button is clicked
     $('#search').click(function(){
@@ -90,8 +112,8 @@ document.getElementById("weather_report").style.display = "none";
       // Get the value of the input field
       // Encode it for use in a URL
       var search_value = encodeURIComponent($('input[name=search_terms]').val());
-      //var latitude = encodeURIComponent($('input[name=latitude]').val());
-      //var longitude = encodeURIComponent($('input[name=longitude]').val());
+      latitude = $("#info1").text();
+      longitude = $("#info2").text();
       
       //alert($("#info1").text());
       //alert($("#info2").text());
@@ -100,11 +122,11 @@ document.getElementById("weather_report").style.display = "none";
       // Send the search terms to the server in an Ajax request
       // This URL is for illustration only
       // You MUST change it to your server
-      alert ('http://cs-server.usc.edu:33893/search_response.php?q=' + search_value + '&lat' + $("#info1").text() + '&long' + $("#info2").text());
+      //alert ('http://cs-server.usc.edu:33893/search_response.php?q=' + search_value + '&lat' + $("#info1").text() + '&long' + $("#info2").text());
       $.ajax({
-        url: 'http://localhost/search_response.php?q=' + search_value + '&lat=' + $("#info1").text() + '&long=' + $("#info2").text(),
+        url: 'search_response.php?q=' + search_value + '&lat=' + $("#info1").text() + '&long=' + $("#info2").text(),
         success: function(data){
-          alert(data);
+          //alert(data);
            json = eval ("(" + data + ")"); 
            document.getElementById("donutchart").style.display= "inline-block";
            document.getElementById("mapCanvas").style.display = "none";
@@ -112,11 +134,11 @@ document.getElementById("weather_report").style.display = "none";
            document.getElementById("search").style.display = "none";
            document.getElementById("findfriends").style.display = "inline-block";
            document.getElementById("news").style.display = "inline-block";
-           alert(json.Happy);
+           //alert(json.Happy);
           //$('#search_results').html(json);
           // Display the results
           //$('#search_results').html(data);
-          alert("<h3>Current Conditions:</h3><h4>Temperature:"+json.Weather+"</h4> ");
+          //alert("<h3>Current Conditions:</h3><h4>Temperature:"+json.Weather+"</h4> ");
 
           $(weather_report).html("<h4>Current Conditions:</h4><h4>Temperature:"+json.Weather+"&deg;F</h4><h4>Happiness index:</h4>" );
 
@@ -273,9 +295,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
               </div>
               <div id="news">
               </div>
-                 <div id="findfriends">
+                 <div id="findfriends" >
 
-              <a href="#" class="btn btn-lg btn-default">Find Friends</a>
+              <!--<a href="#" class="btn btn-lg btn-default" onclick="fetchContacts()">Find Friends</a>-->
+		<button onclick="fetchContacts();return false;">Find friends</button>
               </div>
 
 
@@ -293,11 +316,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
             </p>
           </div>
 
-          <div class="mastfoot">
-            <div class="inner">
-              <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-            </div>
-          </div>
 
         </div>
 

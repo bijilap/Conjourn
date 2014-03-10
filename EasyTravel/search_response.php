@@ -64,11 +64,11 @@
 		$output = array();
 		//$json = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
 
-		exec("python percepclassify.py senti.model < tweet.txt |grep POS|wc -l", $poscnt);
+		exec("python cgi-bin/percepclassify.py cgi-bin/senti.model < tweet.txt |grep POS|wc -l", $poscnt);
 		//var_dump( $output);
 		//print $poscnt[0];
 
-		exec("python percepclassify.py senti.model < tweet.txt |grep NEG|wc -l", $negcnt);
+		exec("python cgi-bin/percepclassify.py cgi-bin/senti.model < tweet.txt |grep NEG|wc -l", $negcnt);
 	/*	print "<br>";
 		print $negcnt[0];
 		
@@ -172,9 +172,9 @@ foreach ($response as $item)
 
 
 
-	exec("python percepclassify.py senti.model < news.txt |grep POS|wc -l", $poscnt_n);
+	exec("python cgi-bin/percepclassify.py cgi-bin/senti.model < news.txt |grep POS|wc -l", $poscnt_n);
 
-	exec("python percepclassify.py senti.model < news.txt |grep NEG|wc -l", $negcnt_n);
+	exec("python cgi-bin/percepclassify.py cgi-bin/senti.model < news.txt |grep NEG|wc -l", $negcnt_n);
 
 $good=$poscnt_n[0]*3+$poscnt[0];
 $bad=$negcnt_n[0]*3+$negcnt[0];

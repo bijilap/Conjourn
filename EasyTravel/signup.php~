@@ -1,0 +1,31 @@
+<?
+//the example of inserting data with variable from HTML form
+//input.php
+mysql_connect("localhost","root","");//database connection
+mysql_select_db("CONJOURN");
+
+//inserting data order
+$order = "INSERT INTO profiles
+			(email, twiliono,phno,location,loclat,loclong,ploclat,ploclong,dispname)
+			VALUES
+			('$_POST[gmailid]',
+			'$_POST[tno]',
+			'$_POST[phno]', null,
+			 $_POST[latitude],
+			 $_POST[longitude],
+			 $_POST[latitude],
+			 $_POST[longitude],
+			'$_POST[dpname]')";
+
+echo $order;
+
+//declare in the order variable
+$result = mysql_query($order);	//order executes
+if($result){
+	echo("<br>Account creation succeed");
+        header( 'Location: http://www.yoursite.com/new_page.html' ) ;
+        
+} else{
+	echo("<br>Input data is fail");
+}
+?>

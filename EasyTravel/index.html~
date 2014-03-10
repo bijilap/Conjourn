@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Cover Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="bootstrap-3.1.1/dist/css/cover.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+	function signinCallback(authResult) {
+	//alert(authResult);
+  	if (authResult['status']['signed_in']) {
+    // Update the app to reflect a signed in user
+    // Hide the sign-in button now that the user is authorized, for example:
+    	document.getElementById('signinButton').setAttribute('style', 'display: none');
+	//document.cookie="email=bijilap@gmail.com";
+  	} else {
+    // Update the app to reflect a signed out user
+    // Possible error values:
+    //   "user_signed_out" - User is signed-out
+    //   "access_denied" - User denied access to your app
+    //   "immediate_failed" - Could not automatically log in the user
+    	console.log('Sign-in state: ' + authResult['error']);
+ 	 }
+    }
+    </script>
+  </head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Con-Journ</h3>
+              <ul class="nav masthead-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="search_request1.html">Locale</a></li>
+                <li><a href="contact.html">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <h1 class="cover-heading">Con-Journ</h1>
+            <p class="lead">Planning to travel? How about catching up with some friends who live nearby? What's the mood around the area? Any idea about the local news?</p>
+	     <p class="lead">Well time to Con-Journ!</p>
+	<span id="signinButton">
+  	 <span
+    		class="g-signin"
+    		data-callback="signinCallback"
+    		data-clientid="838630028924-dmqcsmk6kd1dmgt79o8mpqgpahb9mcdp.apps.googleusercontent.com"
+    		data-cookiepolicy="single_host_origin"
+    		data-requestvisibleactions="http://schemas.google.com/AddActivity"
+    		data-scope="https://www.googleapis.com/auth/plus.login">
+  	 </span>
+	</span>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript">
+      (function() {
+       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+       po.src = 'https://apis.google.com/js/client:plusone.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+     })();
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="bootstrap-3.1.1/dist/js/bootstrap.min.js"></script>
+    <script src="bootstrap-3.1.1/assets/js/docs.min.js"></script>
+  </body>
+</html>
+
